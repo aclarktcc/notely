@@ -29,7 +29,6 @@
       body_html : ""
     };
     $scope.save = function(){
-
         NotesService.save($scope.note);
     };
 
