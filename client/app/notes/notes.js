@@ -21,9 +21,10 @@
 
         });
   }
-  NotesController['$inject'] = ['$state'];
-  function NotesController($state)
+  NotesController['$inject'] = ['$state','NotesService'];
+  function NotesController($state, NotesService)
   {
     $state.go('notes.form');
+    NotesService.fetch();
   }
 })();
