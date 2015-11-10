@@ -6,7 +6,7 @@
           New Note
         </button>
         <ul id="notes">
-          <li ng-repeat="n in notes">{{n.title}}<br>{{n.body_html}}</li>
+          <li ng-repeat="n in notes"><span class="note-title">{{n.title}}</span><br><span class="note-body">{{n.body_html}}</span></li>
         </ul>
       </nav>
     </div>
