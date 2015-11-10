@@ -3,12 +3,22 @@ angular.module('notely')
 
 NotesService.$inject = ['$http'];
 function NotesService($http){
-  this.notes = [];
+  var self = this;
 
-  this.fetch = function(){
+  self.notes = [];
+
+  self.fetch = function(callback){
     $http.get('http://localhost:3000/notes')
     .success(function(notesData){
-      console.log(notesData);
+      self.notes = notesData;
+      if(callback){
+        callback();  
+      }
+
     });
+  };
+
+  self.get = function(){
+    return self.notes;
   };
 };
