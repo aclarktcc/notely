@@ -24,8 +24,9 @@
   NotesController['$inject'] = ['$scope', '$state','NotesService'];
   function NotesController($scope, $state, NotesService)
   {
-    NotesService.fetch(function(notesData){
-      $scope.notes = notesData;
+    NotesService.fetch().then(
+      function(){
+      $scope.notes = NotesService.get();
     });
 
     $state.go('notes.form');
