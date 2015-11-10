@@ -1,14 +1,16 @@
-<form>
+<form ng-submit="save()">
   <p>
     <input type="text"
     name="title"
     id="note_title"
+    ng-model="note.title"
     placeholder="Title your note">
 
   </p>
   <p>
     <textarea
     name="body_html"
+    ng-model="note.body_html"
     placeholder="Just start typing..."
     ></textarea>
   </p>

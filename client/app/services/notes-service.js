@@ -13,7 +13,7 @@ function NotesService($http){
       //Success
       function(response){
       self.notes = response.data;
-    
+
     },
     //Fail
     function(response){
@@ -24,4 +24,21 @@ function NotesService($http){
   self.get = function(){
     return self.notes;
   };
+
+  self.save = function(note){
+
+    $http.post('http://localhost:3000/notes', { "note": note})
+   .then(
+     //Success
+     function(response){
+       
+       self.notes.unshift(response.data.note);
+   },
+   //Fail
+   function(response){
+     //TODO: Handle failure
+   });
+ };
+
+
 };
