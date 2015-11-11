@@ -28,6 +28,7 @@
       title : "",
       body_html : ""
     };
+
     $scope.save = function(){
         NotesService.save($scope.note);
     };
@@ -36,9 +37,9 @@
     NotesService.fetch().then(
       function(){
       $scope.notes = NotesService.get();
+    
     });
 
-    $state.go('notes.form');
 
   }
 })();

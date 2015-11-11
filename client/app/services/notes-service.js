@@ -25,13 +25,26 @@ function NotesService($http){
     return self.notes;
   };
 
+  self.findById = function(noteId){
+
+    for(var i = 0; i < self.notes.length; i++)
+    {
+      if(self.notes[i]._id === noteId)
+      {
+        return self.notes[i];
+
+      }
+    }
+    return {};
+  };
+
   self.save = function(note){
 
     $http.post('http://localhost:3000/notes', { "note": note})
    .then(
      //Success
      function(response){
-       
+
        self.notes.unshift(response.data.note);
    },
    //Fail
