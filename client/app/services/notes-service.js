@@ -31,7 +31,8 @@ function NotesService($http){
     {
       if(self.notes[i]._id === noteId)
       {
-        return self.notes[i];
+        //angular.copy will do a deep copy
+        return angular.copy(self.notes[i]);
 
       }
     }
