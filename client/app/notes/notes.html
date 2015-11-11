@@ -6,7 +6,7 @@
           New Note
         </button>
         <ul id="notes">
-          <li ng-repeat="n in notes | orderBy: '-n.updated_at'">
+          <li ng-repeat="n in notes | orderBy: '-n.updated_at' track by n._id">
             <a class="note" ui-sref="notes.form( {noteId: n._id} )">
               {{n.title}}
             </a>
