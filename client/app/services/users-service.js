@@ -1,5 +1,5 @@
 angular.module('notely')
-  .service('UsersService', ['$http','API_BASE', ($http, API_BASE) => {
+  .service('UsersService', ['$http','API_BASE','AuthToken','CurrentUser', ($http, API_BASE, AuthToken,CurrentUser) => {
 
     class UsersService{
       create(user) {
@@ -7,7 +7,8 @@ angular.module('notely')
           user: user
         });
         userCreatePromise.then((response) => {
-          console.log(response.data);
+          AuthToken.set(response.data.auth_token);
+          CurrentUser.set(response.data.user);
         });
         return userCreatePromise;
       };
