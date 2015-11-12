@@ -1,58 +1,101 @@
 angular.module('notely')
-.service('NotesService', NotesService);
+  .service('NotesService', NotesService);
 
-NotesService.$inject = ['$http'];
-function NotesService($http){
+// NotesService
+// Handle CRUD operations against the server.
+NotesService.$inject = ['$http', 'API_BASE'];
+function NotesService($http, API_BASE) {
   var self = this;
-
   self.notes = [];
 
-  self.fetch = function(){
-     return $http.get('http://localhost:3000/notes')
+  // Get all notes from server
+  self.fetch = function() {
+    return $http.get(API_BASE + 'notes')
     .then(
-      //Success
-      function(response){
-      self.notes = response.data;
-
-    },
-    //Fail
-    function(response){
-      //TODO: Handle failure
-    });
+      // Success callback
+      function(response) {
+        self.notes = response.data;
+      },
+      // Failure callback
+      function(response) {
+        // TODO: Handle failure
+      }
+    );
   };
 
-  self.get = function(){
+  self.get = function() {
     return self.notes;
   };
 
-  self.findById = function(noteId){
-
-    for(var i = 0; i < self.notes.length; i++)
-    {
-      if(self.notes[i]._id === noteId)
-      {
-        //angular.copy will do a deep copy
+  self.findById = function(noteId) {
+    // Look through `self.notes` for a note with a matching _id.
+    for (var i = 0; i < self.notes.length; i++) {
+      if (self.notes[i]._id === noteId) {
         return angular.copy(self.notes[i]);
-
       }
     }
     return {};
   };
 
-  self.save = function(note){
+  self.create = function(note) {
+    var noteCreatePromise = $http.post(API_BASE + 'notes', {
+      note: note
+    });
+    noteCreatePromise.then(function(response) {
+      self.notes.unshift(response.data.note);
+    });
+    return noteCreatePromise;
+  };
 
-    $http.post('http://localhost:3000/notes', { "note": note})
-   .then(
-     //Success
-     function(response){
+  self.update = function(note) {
+    var noteUpdatePromise = $http.put(API_BASE + 'notes/' + note._id, {
+      note: {
+        title: note.title,
+        body_html: note.body_html
+      }
+    });
+    noteUpdatePromise.then(function(response) {
+      self.replaceNote(response.data.note);
+    });
+    return noteUpdatePromise;
+  };
 
-       self.notes.unshift(response.data.note);
-   },
-   //Fail
-   function(response){
-     //TODO: Handle failure
-   });
- };
+  self.replaceNote = function(note) {
+    for (var i = 0; i < self.notes.length; i++) {
+      if (self.notes[i]._id === note._id) {
+        self.notes[i] = note;
+      }
+    }
+  };
+
+  self.delete = function(note) {
+    var noteDeletePromise = $http.delete(API_BASE + 'notes/' + note._id);
+    noteDeletePromise.then(function(response) {
+      self.remove(response.data.note);
+    });
+    return noteDeletePromise;
+  };
+
+  self.remove = function(note) {
+    for (var i = 0; i < self.notes.length; i++) {
+      if (self.notes[i]._id === note._id) {
+        self.notes.splice(i, 1);
+        break;
+      }
+    }
+  };
+}
 
 
-};
+
+
+
+
+
+
+
+
+
+
+
+//
