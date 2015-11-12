@@ -14,7 +14,7 @@ app.use(function(req, res, next){
   next();
 });
 
-app.use('/notes', require('./routes/notes'))
+app.use('/api/v1/notes', require('./routes/notes'))
 
 app.listen(3000, function(){
   console.log('Listening on http://localhost:3000');
