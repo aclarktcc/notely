@@ -1,4 +1,5 @@
 (function() {
+
   angular.module('notely.notes', [
     'ui.router',
     'textAngular'
@@ -50,7 +51,7 @@
         });
       }
     };
-
+//delete
     $scope.delete = function() {
       NotesService.delete($scope.note).then(function() {
         $state.go('notes.form', { noteId: undefined });
