@@ -208,7 +208,7 @@ angular.module('notely').service('UsersService', ['$http', 'API_BASE', function 
           user: user
         });
         userCreatePromise.then(function (response) {
-          console.log(response.data.user);
+          console.log(response.data);
         });
         return userCreatePromise;
       }
